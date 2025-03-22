@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
+# python manage.py collectstatic
 # Set the path for collected static files
 STATIC_ROOT = BASE_DIR / "staticfiles"
 

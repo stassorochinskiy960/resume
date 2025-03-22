@@ -1,7 +1,17 @@
 from django.db import models
 from django.utils.timezone import now
 
+
+class Ip(models.Model):
+    ip = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.ip
+
 class Image(models.Model):
+
+    views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
+
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='uploads/', default='images/icons/icon-close.svg')
@@ -9,6 +19,9 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+
+    def total_views(self):
+        return self.views.count()
 
 class Experience(models.Model):
     company = models.CharField(max_length=255)

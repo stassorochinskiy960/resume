@@ -1,9 +1,17 @@
 from django.shortcuts import render
-from .models import Image, Experience, Education, Project, PositionPerson
+from .models import Ip, Image, Experience, Education, Project, PositionPerson
 
 #file work
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR') # В REMOTE_ADDR значение айпи пользователя
+    return ip
 
 # Create your views here.
 def personal(request):
@@ -13,6 +21,18 @@ def personal(request):
     education = Education.objects.all()
     project = Project.objects.all()
     positionPerson = PositionPerson.objects.all()
+
+    # views request
+    ip = get_client_ip(request)
+
+    ip_instance = Ip.objects.filter(ip=ip).first()
+
+    if ip_instance:
+        for image_instance in image:  # Loop through each Image instance
+            image_instance.views.add(ip_instance)  # ✅ Works on a single instance
+    else:
+        print("No matching IP found")
+
     return render(request, 'personal/personal.html', {'image': image,
                                                       'experience': experience, 'education': education,
                                                       'project': project, 'positionPerson': positionPerson})

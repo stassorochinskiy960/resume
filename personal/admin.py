@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Image, Experience, Education, Project, PositionPerson
+from .models import Ip, Image, Experience, Education, Project, PositionPerson
 
+admin.site.register(Ip)
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['title', 'description', 'file', 'image']
