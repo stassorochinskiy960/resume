@@ -3,14 +3,13 @@ from django.utils.timezone import now
 
 
 class Ip(models.Model):
-    ip = models.CharField(max_length=100)
+    ip_address = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(default=now)
 
     def __str__(self):
-        return self.ip
+        return f"Visitor {self.ip_address} at {self.timestamp}"
 
 class Image(models.Model):
-
-    views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -19,9 +18,6 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
-
-    def total_views(self):
-        return self.views.count()
 
 class Experience(models.Model):
     company = models.CharField(max_length=255)

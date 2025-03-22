@@ -2,10 +2,10 @@ from django.shortcuts import render
 from .models import Ip, Image, Experience, Education, Project, PositionPerson
 
 #file work
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404,HttpRequest
 from django.shortcuts import get_object_or_404
 
-def get_client_ip(request):
+def get_client_ip(request: HttpRequest):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
@@ -24,14 +24,7 @@ def personal(request):
 
     # views request
     ip = get_client_ip(request)
-
-    ip_instance = Ip.objects.filter(ip=ip).first()
-
-    if ip_instance:
-        for image_instance in image:  # Loop through each Image instance
-            image_instance.views.add(ip_instance)  # ✅ Works on a single instance
-    else:
-        print("No matching IP found")
+    Ip.objects.create(ip_address=ip)
 
     return render(request, 'personal/personal.html', {'image': image,
                                                       'experience': experience, 'education': education,
