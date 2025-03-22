@@ -124,6 +124,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# Set the path for collected static files
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 #media
 DEBUG = True
 
