@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'personal',
+    'analytical',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# Add the Google Analytics tracking code
+GOOGLE_ANALYTICS_PROPERTY_ID = 'G-5FS1T4F69J'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
